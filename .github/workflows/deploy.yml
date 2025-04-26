@@ -1,0 +1,36 @@
+name: Deploy Flask App to Heroku
+
+on:
+  push:
+    branches:
+      - main  # This triggers the workflow when changes are pushed to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_APP_NAME: your-app-name
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+          echo "Heroku API Key: $HEROKU_API_KEY"
+          echo "Heroku App Name: $HEROKU_APP_NAME"
+          echo "$HEROKU_API_KEY" | heroku auth:token
+          heroku git:remote -a $HEROKU_APP_NAME
+          git push heroku main
