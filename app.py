@@ -12,14 +12,15 @@ with open('SessionDetails.json') as f:
     session_data= json.load(f)
 
 def load_job_listings():
-    job_listings=[]
-    with open('job_listing_data.csv',mode='r') as file:
-        csv_reader =csv.DictReader(file)
-        print("CSV Headers: ", csv_reader.fieldnames)
+    job_listings = []
+    with open('job_listing_data.csv', mode='r') as file:
+        csv_reader = csv.DictReader(file)
+        print("CSV Headers:", csv_reader.fieldnames)  # Debug: Print column headers
         for row in csv_reader:
+            print("Row data:", row)  # Debug: Print each row of the CSV
             job_listings.append(row)
-        return job_listings
-    
+    return job_listings
+
 
 @app.route('/')
 def home():
@@ -44,7 +45,8 @@ def chat():
     if "job" in user_input:
 
         if 'delhi' in user_input:
-            filtered_jobs=[job for job in job_listings if 'delhi' in job['Location'].lower()]
+            filtered_jobs = [job for job in job_listings if 'delhi' in job.get('Location', '').lower()]
+
             response="Here are some jobs in Delhi: Data Scientist at DataX."
         elif 'data scientist' in user_input:
             filtered_jobs= [job for job in job_listings if 'data scientist' in job['job_title'].lower()]
