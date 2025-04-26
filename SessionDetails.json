@@ -1,0 +1,17 @@
+[
+    {
+      "session_id": "1",
+      "user": "User1",
+      "location": "Mumbai",
+      "job_preferences": ["Software Engineer", "Data Scientist"],
+      "active": true
+    },
+    {
+      "session_id": "2",
+      "user": "User2",
+      "location": "Delhi",
+      "job_preferences": ["Product Manager", "HR"],
+      "active": true
+    }
+  ]
+  
